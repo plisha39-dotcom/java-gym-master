@@ -1,9 +1,6 @@
 package ru.yandex.practicum.gym;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Timetable {
 
@@ -47,5 +44,33 @@ public class Timetable {
         } else {
             return new ArrayList<>();
         }
+    }
+
+    public List<CounterOfTrainings> getCountByCoaches() {
+        HashMap<Coach, Integer> countCoaches = new HashMap<>();
+        for (TreeMap<TimeOfDay, List<TrainingSession>> day : timetable.values()) {
+            for (List<TrainingSession> sessions : day.values()) {
+                for (TrainingSession trainingSession : sessions) {
+                    Coach coach = trainingSession.getCoach();
+                    if (!countCoaches.containsKey(coach)) {
+                        countCoaches.put(coach, 1);
+                    } else {
+                        int countCurrent = countCoaches.get(coach);
+                        int newCount = countCurrent + 1;
+                        countCoaches.put(coach, newCount);
+                    }
+                }
+            }
+        }
+        List<CounterOfTrainings> rosterCoach = new ArrayList<>();
+        for (Map.Entry<Coach, Integer> entry : countCoaches.entrySet()) {
+            Coach oneCoach = entry.getKey();
+            Integer count = entry.getValue();
+            CounterOfTrainings counter = new CounterOfTrainings(oneCoach, count);
+            rosterCoach.add(counter);
+        }
+        CounterOfTrainingsComparator comparator = new CounterOfTrainingsComparator();
+        rosterCoach.sort(comparator);
+        return rosterCoach;
     }
 }
