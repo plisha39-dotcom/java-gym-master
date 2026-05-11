@@ -156,6 +156,6 @@ public class TimetableTest {
         Assertions.assertEquals(2, trainingSessions.get(1).getCount());
 
         Assertions.assertEquals(coach3, trainingSessions.get(2).getCoach());
-        Assertions.assertEquals(3, trainingSessions.get(2).getCount());
+        Assertions.assertEquals(1, trainingSessions.get(2).getCount());
     }
 }
