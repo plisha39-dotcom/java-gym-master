@@ -22,16 +22,11 @@ public class Timetable {
         sessionList.add(trainingSession);
     }
 
-    public List<TrainingSession> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
+    public TreeMap<TimeOfDay, List<TrainingSession>> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
         if (!timetable.containsKey(dayOfWeek)) {
-            return new ArrayList<>();
+            return new TreeMap<>();
         }
-        TreeMap<TimeOfDay, List<TrainingSession>> day = timetable.get(dayOfWeek);
-        List<TrainingSession> sessions = new ArrayList<>();
-        for (TimeOfDay time : day.navigableKeySet()) {
-            sessions.addAll(day.get(time));
-        }
-        return sessions;
+        return timetable.get(dayOfWeek);
     }
 
     public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
